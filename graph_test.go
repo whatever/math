@@ -85,7 +85,7 @@ func TestSimpleGraph(t *testing.T) {
 
 	cycles := getCycles(g.vertices["a"], []string{})
 
-	fmt.Println(cycles)
+	fmt.Println(">>", cycles)
 }
 
 func TestGraphMethods(t *testing.T) {

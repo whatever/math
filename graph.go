@@ -4,6 +4,20 @@ import (
 	"fmt"
 )
 
+func extend(lhs, rhs []string) []string {
+	result := make([]string, len(lhs)+len(rhs), len(lhs)+len(rhs))
+
+	for i, _ := range lhs {
+		result[i] = lhs[i]
+	}
+
+	for i, _ := range rhs {
+		result[i+len(lhs)] = rhs[i]
+	}
+
+	return result
+}
+
 func IndexOfString(slice []string, needle string) int {
 	for i, v := range slice {
 		if v == needle {
@@ -88,23 +102,23 @@ func getCycles(g *GraphNode, visited []string) [][]string {
 	results := make([][]string, 0)
 
 	// Edge case
-	if g == nil {
+	if g == nil || IndexOfString(visited, g.Label) != -1 {
 		return [][]string{}
-	}
-
-	if IndexOfString(visited, g.Label) != -1 {
-		return [][]string{}
+	} else if len(g.Children) == 0 {
+		return [][]string{[]string{g.Label}}
 	}
 
 	for _, h := range g.Children {
-		paths := append(visited, g.Label)
-		for _, c := range getCycles(h, paths) {
-			results = append(results, c)
-		}
-		fmt.Println(paths)
-	}
 
-	fmt.Println(visited)
+		for _, c := range getCycles(h, visited) {
+			path := extend(visited, c)
+			path = append(path, g.Label)
+			results = append(results, path)
+		}
+
+		// path := append(visited, g.Label)
+		// results = append(results, path)
+	}
 
 	return results
 }
