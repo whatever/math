@@ -131,7 +131,7 @@ func TestSimpleGraph(t *testing.T) {
 	g2.AddConnection("f", "g")
 	g2.AddConnection("g", "a")
 
-	cycles4 := getCycles(g2.vertices["a"], []string{})
+	cycles4 := g2.GetCyclesFor("a")
 
 	if len(cycles4) != 3 {
 		t.Fail()

@@ -93,9 +93,8 @@ func (self *Graph) AddConnection(src, dest string) {
 	}
 }
 
-func (self *Graph) GetCycles() [][]string {
-	cycles := make([][]string, 0)
-	return cycles
+func (self *Graph) GetCyclesFor(label string) [][]string {
+	return getCycles(self.vertices[label], []string{})
 }
 
 func getCycles(g *GraphNode, visited []string) [][]string {
