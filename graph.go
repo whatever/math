@@ -98,7 +98,7 @@ func (self *Graph) GetCycles() [][]string {
 	return cycles
 }
 
-func getCycles3(g *GraphNode, visited []string) [][]string {
+func getCycles(g *GraphNode, visited []string) [][]string {
 
 	switch {
 	case g == nil || visited == nil:
@@ -116,7 +116,7 @@ func getCycles3(g *GraphNode, visited []string) [][]string {
 	newVisited := append(visited, g.Label)
 
 	for _, h := range g.Children {
-		for _, cycle := range getCycles3(h, newVisited) {
+		for _, cycle := range getCycles(h, newVisited) {
 			results = append(results, cycle)
 		}
 	}

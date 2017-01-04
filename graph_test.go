@@ -97,19 +97,19 @@ func TestSimpleGraph(t *testing.T) {
 	// g.AddConnection("B2", "d")
 	// g.AddConnection("c", "a")
 
-	cycles3 := getCycles3(g.vertices["a"], []string{"a", "b", "c", "d2"})
+	cycles3 := getCycles(g.vertices["a"], []string{"a", "b", "c", "d2"})
 
 	if strings.Join(cycles3[0], ",") != "a,b,c,d2,a" {
 		t.Fail()
 	}
 
-	cycles := getCycles3(g.vertices["a"], []string{})
+	cycles := getCycles(g.vertices["a"], []string{})
 
 	if len(cycles) != 2 {
 		t.Fail()
 	}
 
-	cycles2 := getCycles3(nil, nil)
+	cycles2 := getCycles(nil, nil)
 
 	if len(cycles2) != 0 {
 		t.Fail()
@@ -130,7 +130,8 @@ func TestSimpleGraph(t *testing.T) {
 	g2.AddConnection("a", "f")
 	g2.AddConnection("f", "g")
 	g2.AddConnection("g", "a")
-	cycles4 := getCycles3(g2.vertices["a"], []string{})
+
+	cycles4 := getCycles(g2.vertices["a"], []string{})
 
 	if len(cycles4) != 3 {
 		t.Fail()
