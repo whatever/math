@@ -73,6 +73,21 @@ func TestGraph(t *testing.T) {
 	}
 }
 
+func TestSimpleGraph(t *testing.T) {
+	g := NewGraph()
+	g.AddNode("a")
+	g.AddNode("B1")
+	g.AddNode("B2")
+	g.AddNode("c")
+	g.AddConnection("a", "B1")
+	g.AddConnection("a", "B2")
+	g.AddConnection("B1", "c")
+
+	cycles := getCycles(g.vertices["a"], []string{})
+
+	fmt.Println(cycles)
+}
+
 func TestGraphMethods(t *testing.T) {
 	g := NewGraph()
 	g.AddNode("a")

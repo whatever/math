@@ -1,8 +1,17 @@
 package math
 
 import (
-	_ "fmt"
+	"fmt"
 )
+
+func IndexOfString(slice []string, needle string) int {
+	for i, v := range slice {
+		if v == needle {
+			return i
+		}
+	}
+	return -1
+}
 
 type GraphNode struct {
 	Label    string
@@ -11,6 +20,14 @@ type GraphNode struct {
 
 func (self *GraphNode) ConnectNode(g *GraphNode) {
 	self.Children = append(self.Children, g)
+}
+
+func (self *GraphNode) GetEdgeLabels() []string {
+	edgeLabels := make([]string, len(self.Children))
+	for i, h := range self.Children {
+		edgeLabels[i] = h.Label
+	}
+	return edgeLabels
 }
 
 type Graph struct {
@@ -62,5 +79,36 @@ func (self *Graph) AddConnection(src, dest string) {
 	}
 }
 
-func (self *Graph) GetNaiveCycles() {
+func (self *Graph) GetCycles() [][]string {
+	cycles := make([][]string, 0)
+	return cycles
+}
+
+func getCycles(g *GraphNode, visited []string) [][]string {
+	results := make([][]string, 0)
+
+	// Edge case
+	if g == nil {
+		return [][]string{}
+	}
+
+	if IndexOfString(visited, g.Label) != -1 {
+		return [][]string{}
+	}
+
+	for _, h := range g.Children {
+		paths := append(visited, g.Label)
+		for _, c := range getCycles(h, paths) {
+			results = append(results, c)
+		}
+		fmt.Println(paths)
+	}
+
+	fmt.Println(visited)
+
+	return results
+}
+
+func _() {
+	fmt.Println("...")
 }
