@@ -136,6 +136,25 @@ func TestSimpleGraph(t *testing.T) {
 	if len(cycles4) != 3 {
 		t.Fail()
 	}
+
+	g3 := NewGraph()
+	g3.AddNode("a")
+	g3.AddNode("b")
+	g3.AddNode("c")
+	g3.AddConnection("b", "c")
+	g3.AddConnection("c", "b")
+
+	noCycles := g3.GetCyclesFor("a")
+
+	if len(noCycles) != 0 {
+		t.Fail()
+	}
+
+	oneCycle := g3.GetCyclesFor("b")
+
+	if len(oneCycle) != 1 {
+		t.Fail()
+	}
 }
 
 func TestGraphMethods(t *testing.T) {
