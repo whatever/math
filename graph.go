@@ -33,6 +33,11 @@ type GraphNode struct {
 }
 
 func (self *GraphNode) ConnectNode(g *GraphNode) {
+	for _, child := range self.Children {
+		if child == g {
+			return
+		}
+	}
 	self.Children = append(self.Children, g)
 }
 
@@ -93,11 +98,11 @@ func (self *Graph) AddConnection(src, dest string) {
 	}
 }
 
-func (self *Graph) GetCyclesFor(label string) [][]string {
-	return getCycles(self.vertices[label], []string{})
+func (self *Graph) GetCyclesFor(label string, size int) [][]string {
+	return getCycles(self.vertices[label], []string{}, size)
 }
 
-func getCycles(g *GraphNode, visited []string) [][]string {
+func getCycles(g *GraphNode, visited []string, size int) [][]string {
 
 	switch {
 	case g == nil || visited == nil:
@@ -107,6 +112,9 @@ func getCycles(g *GraphNode, visited []string) [][]string {
 		newVisited := extend(visited, []string{g.Label})
 		return [][]string{newVisited}
 
+	case size == 0:
+		return [][]string{}
+
 	case IndexOfString(visited, g.Label) != -1:
 		return [][]string{}
 	}
@@ -115,7 +123,13 @@ func getCycles(g *GraphNode, visited []string) [][]string {
 	newVisited := append(visited, g.Label)
 
 	for _, h := range g.Children {
-		for _, cycle := range getCycles(h, newVisited) {
+
+		newSize := size
+		if newSize != -1 {
+			newSize -= 1
+		}
+
+		for _, cycle := range getCycles(h, newVisited, newSize) {
 			results = append(results, cycle)
 		}
 	}

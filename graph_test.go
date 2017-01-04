@@ -97,19 +97,19 @@ func TestSimpleGraph(t *testing.T) {
 	// g.AddConnection("B2", "d")
 	// g.AddConnection("c", "a")
 
-	cycles3 := getCycles(g.vertices["a"], []string{"a", "b", "c", "d2"})
+	cycles3 := getCycles(g.vertices["a"], []string{"a", "b", "c", "d2"}, -1)
 
 	if strings.Join(cycles3[0], ",") != "a,b,c,d2,a" {
 		t.Fail()
 	}
 
-	cycles := getCycles(g.vertices["a"], []string{})
+	cycles := getCycles(g.vertices["a"], []string{}, -1)
 
 	if len(cycles) != 2 {
 		t.Fail()
 	}
 
-	cycles2 := getCycles(nil, nil)
+	cycles2 := getCycles(nil, nil, -1)
 
 	if len(cycles2) != 0 {
 		t.Fail()
@@ -131,7 +131,7 @@ func TestSimpleGraph(t *testing.T) {
 	g2.AddConnection("f", "g")
 	g2.AddConnection("g", "a")
 
-	cycles4 := g2.GetCyclesFor("a")
+	cycles4 := g2.GetCyclesFor("a", -1)
 
 	if len(cycles4) != 3 {
 		t.Fail()
@@ -144,13 +144,13 @@ func TestSimpleGraph(t *testing.T) {
 	g3.AddConnection("b", "c")
 	g3.AddConnection("c", "b")
 
-	noCycles := g3.GetCyclesFor("a")
+	noCycles := g3.GetCyclesFor("a", -1)
 
 	if len(noCycles) != 0 {
 		t.Fail()
 	}
 
-	oneCycle := g3.GetCyclesFor("b")
+	oneCycle := g3.GetCyclesFor("b", -1)
 
 	if len(oneCycle) != 1 {
 		t.Fail()
