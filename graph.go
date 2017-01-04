@@ -98,26 +98,27 @@ func (self *Graph) GetCycles() [][]string {
 	return cycles
 }
 
-func getCycles(g *GraphNode, visited []string) [][]string {
-	results := make([][]string, 0)
+func getCycles3(g *GraphNode, visited []string) [][]string {
 
-	// Edge case
-	if g == nil || IndexOfString(visited, g.Label) != -1 {
+	switch {
+	case g == nil || visited == nil:
 		return [][]string{}
-	} else if len(g.Children) == 0 {
-		return [][]string{[]string{g.Label}}
+
+	case len(visited) > 0 && visited[0] == g.Label:
+		newVisited := extend(visited, []string{g.Label})
+		return [][]string{newVisited}
+
+	case IndexOfString(visited, g.Label) != -1:
+		return [][]string{}
 	}
 
+	results := make([][]string, 0)
+	newVisited := append(visited, g.Label)
+
 	for _, h := range g.Children {
-
-		for _, c := range getCycles(h, visited) {
-			path := extend(visited, c)
-			path = append(path, g.Label)
-			results = append(results, path)
+		for _, cycle := range getCycles3(h, newVisited) {
+			results = append(results, cycle)
 		}
-
-		// path := append(visited, g.Label)
-		// results = append(results, path)
 	}
 
 	return results

@@ -2,6 +2,7 @@ package math
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -76,16 +77,64 @@ func TestGraph(t *testing.T) {
 func TestSimpleGraph(t *testing.T) {
 	g := NewGraph()
 	g.AddNode("a")
-	g.AddNode("B1")
-	g.AddNode("B2")
+	g.AddNode("b")
 	g.AddNode("c")
-	g.AddConnection("a", "B1")
-	g.AddConnection("a", "B2")
-	g.AddConnection("B1", "c")
+	g.AddNode("d1")
+	g.AddNode("d2")
+	g.AddConnection("a", "b")
+	g.AddConnection("b", "c")
+	g.AddConnection("c", "d1")
+	g.AddConnection("d1", "a")
+	g.AddConnection("c", "d2")
+	g.AddConnection("d2", "a")
+	// g.AddConnection("d", "b")
 
-	cycles := getCycles(g.vertices["a"], []string{})
+	// g.AddConnection("e", "a")
+	// g.AddConnection("a", "c")
+	// g.AddConnection("e", "f")
+	// g.AddConnection("a", "B2")
+	// g.AddConnection("B2", "c")
+	// g.AddConnection("B2", "d")
+	// g.AddConnection("c", "a")
 
-	fmt.Println(">>", cycles)
+	cycles3 := getCycles3(g.vertices["a"], []string{"a", "b", "c", "d2"})
+
+	if strings.Join(cycles3[0], ",") != "a,b,c,d2,a" {
+		t.Fail()
+	}
+
+	cycles := getCycles3(g.vertices["a"], []string{})
+
+	if len(cycles) != 2 {
+		t.Fail()
+	}
+
+	cycles2 := getCycles3(nil, nil)
+
+	if len(cycles2) != 0 {
+		t.Fail()
+	}
+
+	g2 := NewGraph()
+	g2.AddNode("a")
+	g2.AddNode("b")
+	g2.AddNode("c")
+	g2.AddNode("d")
+	g2.AddNode("f")
+	g2.AddNode("g")
+	g2.AddConnection("a", "b")
+	g2.AddConnection("b", "c")
+	g2.AddConnection("c", "a")
+	g2.AddConnection("c", "d")
+	g2.AddConnection("d", "a")
+	g2.AddConnection("a", "f")
+	g2.AddConnection("f", "g")
+	g2.AddConnection("g", "a")
+	cycles4 := getCycles3(g2.vertices["a"], []string{})
+
+	if len(cycles4) != 3 {
+		t.Fail()
+	}
 }
 
 func TestGraphMethods(t *testing.T) {
