@@ -1,6 +1,7 @@
 package math
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -72,5 +73,29 @@ func TestFactorize(t *testing.T) {
 
 	if !mapEquals(sieve.PrimeFactorize(169), map[int]int{13: 2}) {
 		t.Fail()
+	}
+}
+
+func TestTotient(t *testing.T) {
+	s := NewNaiveSieve(1000)
+
+	expected := map[int]int{
+		2:  1,
+		3:  2,
+		4:  2,
+		5:  4,
+		6:  2,
+		7:  6,
+		8:  4,
+		9:  6,
+		10: 4,
+	}
+
+	for n, totient := range expected {
+		v := s.Totient(n)
+		if v != totient {
+			fmt.Printf("T(%d) = %d != %d\n", n, v, totient)
+			t.Fail()
+		}
 	}
 }

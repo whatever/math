@@ -55,6 +55,28 @@ func (self *NaiveSieve) PrimeFactorize(n int) map[int]int {
 	return factors
 }
 
+/*
+Return the totient phi-function of a number n
+
+NOTE: This attempts to keep the value as low as possible,
+so it completed the totient function in 2-passes:
+	1. Reduce
+	2. Multiply
+*/
+func (s *NaiveSieve) Totient(n int) int {
+	result := n
+
+	for p, _ := range s.PrimeFactorize(n) {
+		result /= p
+	}
+
+	for p, _ := range s.PrimeFactorize(n) {
+		result *= p - 1
+	}
+
+	return result
+}
+
 func (self *NaiveSieve) Primes() []int {
 	primes := make([]int, 0, len(self.sieve))
 	for n, _ := range self.sieve {
