@@ -65,12 +65,18 @@ so it completed the totient function in 2-passes:
 */
 func (s *NaiveSieve) Totient(n int) int {
 	result := n
+	factors := s.PrimeFactorize(n)
+	primes := make([]int, 0)
 
-	for p, _ := range s.PrimeFactorize(n) {
+	for p, _ := range factors {
+		primes = append(primes, p)
+	}
+
+	for _, p := range primes {
 		result /= p
 	}
 
-	for p, _ := range s.PrimeFactorize(n) {
+	for _, p := range primes {
 		result *= p - 1
 	}
 
