@@ -2,7 +2,6 @@ package math
 
 import (
 	"math"
-	"sort"
 )
 
 type NaiveSieve struct {
@@ -84,12 +83,7 @@ func (s *NaiveSieve) Totient(n int) int {
 }
 
 func (self *NaiveSieve) Primes() []int {
-	primes := make([]int, 0, len(self.sieve))
-	for n, _ := range self.sieve {
-		primes = append(primes, n)
-	}
-	sort.Ints(primes)
-	return primes
+	return self.primes
 }
 
 func IsNaivePrime(n int) bool {
