@@ -51,7 +51,9 @@ func TestWeightedUGraph(t *testing.T) {
 
 func TestWUndiShortestPath(t *testing.T) {
 	a := NewWeightedUGraph()
-	a.AddVertex("a").AddVertex("b")
+	a.AddVertex("a").AddVertex("b").AddVertex("c")
+	a.AddEdge("a", "b", 10)
+	a.AddEdge("a", "c", 3)
 
 	expectations := map[*WeightedUGraph][]string{
 		&a: []string{"a", "b"},
@@ -63,6 +65,18 @@ func TestWUndiShortestPath(t *testing.T) {
 			fmt.Println(g, ":", path, "!=", e)
 			t.Fail()
 		}
+	}
+}
+
+func TestMinElement(t *testing.T) {
+	a := map[string]float64{
+		"red":  23.0,
+		"blue": -200.0,
+		"y":    200.0,
+	}
+	label, result := MinElement(&a)
+	if label != "blue" || result != -200.0 {
+		t.Fail()
 	}
 }
 
