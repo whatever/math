@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func TestGraphNode(t *testing.T) {
-	g := GraphNode{"g", nil}
-	h := GraphNode{"h", nil}
+func TestDiGraphNode(t *testing.T) {
+	g := DiGraphNode{"g", nil}
+	h := DiGraphNode{"h", nil}
 
 	if len(g.Children) != 0 {
 		t.Fail()
@@ -31,8 +31,8 @@ func TestGraphNode(t *testing.T) {
 	}
 }
 
-func TestGraph(t *testing.T) {
-	g := NewGraph()
+func TestDiGraph(t *testing.T) {
+	g := NewDiGraph()
 
 	if g.CountNodes() != 0 {
 		t.Fail()
@@ -74,8 +74,8 @@ func TestGraph(t *testing.T) {
 	}
 }
 
-func TestSimpleGraph(t *testing.T) {
-	g := NewGraph()
+func TestSimpleDiGraph(t *testing.T) {
+	g := NewDiGraph()
 	g.AddNode("a")
 	g.AddNode("b")
 	g.AddNode("c")
@@ -115,7 +115,7 @@ func TestSimpleGraph(t *testing.T) {
 		t.Fail()
 	}
 
-	g2 := NewGraph()
+	g2 := NewDiGraph()
 	g2.AddNode("a")
 	g2.AddNode("b")
 	g2.AddNode("c")
@@ -137,7 +137,7 @@ func TestSimpleGraph(t *testing.T) {
 		t.Fail()
 	}
 
-	g3 := NewGraph()
+	g3 := NewDiGraph()
 	g3.AddNode("a")
 	g3.AddNode("b")
 	g3.AddNode("c")
@@ -157,8 +157,8 @@ func TestSimpleGraph(t *testing.T) {
 	}
 }
 
-func TestGraphMethods(t *testing.T) {
-	g := NewGraph()
+func TestDiGraphMethods(t *testing.T) {
+	g := NewDiGraph()
 	g.AddNode("a")
 	g.AddNode("b")
 	g.AddNode("c")

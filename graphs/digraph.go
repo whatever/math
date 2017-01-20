@@ -27,12 +27,12 @@ func IndexOfString(slice []string, needle string) int {
 	return -1
 }
 
-type GraphNode struct {
+type DiGraphNode struct {
 	Label    string
-	Children []*GraphNode
+	Children []*DiGraphNode
 }
 
-func (self *GraphNode) ConnectNode(g *GraphNode) {
+func (self *DiGraphNode) ConnectNode(g *DiGraphNode) {
 	for _, child := range self.Children {
 		if child == g {
 			return
@@ -41,7 +41,7 @@ func (self *GraphNode) ConnectNode(g *GraphNode) {
 	self.Children = append(self.Children, g)
 }
 
-func (self *GraphNode) GetEdgeLabels() []string {
+func (self *DiGraphNode) GetEdgeLabels() []string {
 	edgeLabels := make([]string, len(self.Children))
 	for i, h := range self.Children {
 		edgeLabels[i] = h.Label
@@ -49,19 +49,19 @@ func (self *GraphNode) GetEdgeLabels() []string {
 	return edgeLabels
 }
 
-type Graph struct {
-	vertices map[string]*GraphNode
+type DiGraph struct {
+	vertices map[string]*DiGraphNode
 }
 
-func NewGraph() Graph {
-	return Graph{make(map[string]*GraphNode)}
+func NewDiGraph() DiGraph {
+	return DiGraph{make(map[string]*DiGraphNode)}
 }
 
-func (self *Graph) CountNodes() int {
+func (self *DiGraph) CountNodes() int {
 	return len(self.vertices)
 }
 
-func (self *Graph) CountEdges() int {
+func (self *DiGraph) CountEdges() int {
 	edges := make(map[string][]string)
 
 	for _, g := range self.vertices {
@@ -79,15 +79,15 @@ func (self *Graph) CountEdges() int {
 	return size
 }
 
-func (self *Graph) AddNode(label string) {
+func (self *DiGraph) AddNode(label string) {
 	if _, ok := self.vertices[label]; ok {
 		panic("A node already exists with that label")
 	} else {
-		self.vertices[label] = &GraphNode{label, nil}
+		self.vertices[label] = &DiGraphNode{label, nil}
 	}
 }
 
-func (self *Graph) AddConnection(src, dest string) {
+func (self *DiGraph) AddConnection(src, dest string) {
 	g, g_ok := self.vertices[src]
 	h, h_ok := self.vertices[dest]
 
@@ -98,11 +98,11 @@ func (self *Graph) AddConnection(src, dest string) {
 	}
 }
 
-func (self *Graph) GetCyclesFor(label string, size int) [][]string {
+func (self *DiGraph) GetCyclesFor(label string, size int) [][]string {
 	return getCycles(self.vertices[label], []string{}, size)
 }
 
-func getCycles(g *GraphNode, visited []string, size int) [][]string {
+func getCycles(g *DiGraphNode, visited []string, size int) [][]string {
 
 	switch {
 	case g == nil || visited == nil:
