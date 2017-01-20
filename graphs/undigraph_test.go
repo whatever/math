@@ -50,4 +50,30 @@ func TestWeightedUGraph(t *testing.T) {
 }
 
 func TestWUndiShortestPath(t *testing.T) {
+
+	a := NewWeightedUGraph()
+	a.AddVertex("a", 10).AddVertex("b", 23)
+
+	expectations := map[*WeightedUGraph][]string{
+		&a: []string{"a", "b"},
+	}
+
+	for g, e := range expectations {
+		if !StringsEqual(g.ShortestPath("a", "b"), e) {
+			fmt.Println(g, "!=", e)
+			t.Fail()
+		}
+	}
+}
+
+func StringsEqual(lhs, rhs []string) bool {
+	if len(lhs) != len(rhs) {
+		return false
+	}
+	for i, _ := range lhs {
+		if lhs[i] != rhs[i] {
+			return false
+		}
+	}
+	return true
 }
