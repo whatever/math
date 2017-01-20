@@ -10,7 +10,7 @@ func MinElement(values *map[string]float64) (string, float64) {
 	minInd := ""
 
 	for label, val := range *values {
-		if val < minVal {
+		if val <= minVal {
 			minVal = val
 			minInd = label
 		}
@@ -22,6 +22,10 @@ type WeightedUndiGraphEdge struct {
 	weight float64
 	src    *WeightedUndiGraphVertex
 	dst    *WeightedUndiGraphVertex
+}
+
+func (s *WeightedUndiGraphEdge) String() string {
+	return fmt.Sprintf("[%s %s]: %0.1f", s.src.Label, s.dst.Label, s.weight)
 }
 
 type WeightedUndiGraphVertex struct {
@@ -65,25 +69,39 @@ func (s *WeightedUGraph) AddEdge(src, dest string, weight float64) *WeightedUGra
 func (s *WeightedUGraph) ShortestPath(src, dest string) []string {
 	distances := make(map[string]float64)
 	previous := make(map[string]float64)
-	visited := make(map[string]bool)
+	unvisited := make(map[string]bool)
 
 	// Set "longest path" for all nodes
 	for label, _ := range s.vertices {
 		distances[label] = math.Inf(1)
 		previous[label] = math.Inf(1)
-		visited[label] = false
+		unvisited[label] = true
 	}
-	distances[src] = 0
+	distances[src] = 0.0
 
 	// ...
-	current := *s.vertices[src]
+	for len(distances) > 0 {
 
-	// ...
-	for _, e := range current.Edges {
-		currentDist := distances[e.dst.Label]
-		dist := math.Min(e.weight, currentDist)
-		fmt.Println(current.Label, e.dst.Label, currentDist, dist)
+		// Find the next element to check, and remove it
+		currentLabel, currentValue := MinElement(&distances)
+		current := s.vertices[currentLabel]
+
+		delete(distances, currentLabel)
+
+		// ...
+		fmt.Println("-->")
+		for _, e := range current.Edges {
+			fmt.Println(e)
+		}
+
+		_, _, _ = currentLabel, currentValue, current
+
+		// fmt.Println(current, currentValue, current.Edges)
 	}
 
 	return []string{}
+}
+
+func _() {
+	fmt.Println()
 }
