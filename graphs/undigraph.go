@@ -1,7 +1,11 @@
 package math
 
+import (
+	"math"
+)
+
 type WeightedUndiGraphEdge struct {
-	weight int
+	weight float64
 	src    *WeightedUndiGraphVertex
 	dst    *WeightedUndiGraphVertex
 }
@@ -11,7 +15,7 @@ type WeightedUndiGraphVertex struct {
 	Edges []*WeightedUndiGraphEdge
 }
 
-func (s *WeightedUndiGraphVertex) AddEdge(n *WeightedUndiGraphVertex, weight int) {
+func (s *WeightedUndiGraphVertex) AddEdge(n *WeightedUndiGraphVertex, weight float64) {
 	e := WeightedUndiGraphEdge{weight, s, n}
 	s.Edges = append(s.Edges, &e)
 }
@@ -34,7 +38,7 @@ func (s *WeightedUGraph) AddVertex(label string) *WeightedUGraph {
 	return s
 }
 
-func (s *WeightedUGraph) AddEdge(src, dest string, weight int) *WeightedUGraph {
+func (s *WeightedUGraph) AddEdge(src, dest string, weight float64) *WeightedUGraph {
 	source := s.vertices[src]
 	destination := s.vertices[dest]
 
@@ -45,5 +49,13 @@ func (s *WeightedUGraph) AddEdge(src, dest string, weight int) *WeightedUGraph {
 }
 
 func (s *WeightedUGraph) ShortestPath(src, dest string) []string {
+	distances := make(map[string]float64)
+
+	// Set "longest path" for all nodes
+	for label, _ := range s.vertices {
+		distances[label] = math.Inf(1)
+	}
+	distances[src] = 0
+
 	return []string{}
 }
