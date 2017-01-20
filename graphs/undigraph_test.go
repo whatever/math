@@ -10,16 +10,16 @@ func _() {
 }
 
 func TestWeightedUndiGraphVertex(t *testing.T) {
-	a := WeightedUndiGraphVertex{"a", 10, nil}
+	a := WeightedUndiGraphVertex{"a", nil}
 
-	if a.Weight != 10 {
+	if a.Label != "a" {
 		t.Fail()
 	}
 
-	b := WeightedUndiGraphVertex{"b", 10, nil}
-	b.AddEdge(&a)
+	b := WeightedUndiGraphVertex{"b", nil}
+	b.AddEdge(&a, 10)
 
-	if len(b.Neighbors) != 1 || b.Neighbors[0] != &a {
+	if len(b.Edges) != 1 || b.Edges[0].dst != &a {
 		t.Fail()
 	}
 }
@@ -31,36 +31,36 @@ func TestWeightedUGraph(t *testing.T) {
 		t.Fail()
 	}
 
-	a.AddVertex("a", 10)
+	a.AddVertex("a")
 
-	if len(a.vertices) != 1 || a.vertices["a"].Weight != 10 {
+	if len(a.vertices) != 1 || a.vertices["a"].Label != "a" {
 		t.Fail()
 	}
 
-	a.AddVertex("b", 4)
-	a.AddEdge("a", "b")
+	a.AddVertex("b")
+	a.AddEdge("a", "b", 10)
 
-	if len(a.vertices["a"].Neighbors) != 1 && a.vertices["a"].Neighbors[0].Label != "b" {
+	if len(a.vertices["a"].Edges) != 1 && a.vertices["a"].Edges[0].dst.Label != "b" {
 		t.Fail()
 	}
 
-	if len(a.vertices["b"].Neighbors) != 1 && a.vertices["b"].Neighbors[0].Label != "a" {
+	if len(a.vertices["b"].Edges) != 1 && a.vertices["b"].Edges[0].dst.Label != "a" {
 		t.Fail()
 	}
 }
 
 func TestWUndiShortestPath(t *testing.T) {
-
 	a := NewWeightedUGraph()
-	a.AddVertex("a", 10).AddVertex("b", 23)
+	a.AddVertex("a").AddVertex("b")
 
 	expectations := map[*WeightedUGraph][]string{
 		&a: []string{"a", "b"},
 	}
 
 	for g, e := range expectations {
-		if !StringsEqual(g.ShortestPath("a", "b"), e) {
-			fmt.Println(g, "!=", e)
+		path := g.ShortestPath("a", "b")
+		if !StringsEqual(path, e) {
+			fmt.Println(g, ":", path, "!=", e)
 			t.Fail()
 		}
 	}
@@ -70,10 +70,12 @@ func StringsEqual(lhs, rhs []string) bool {
 	if len(lhs) != len(rhs) {
 		return false
 	}
+
 	for i, _ := range lhs {
 		if lhs[i] != rhs[i] {
 			return false
 		}
 	}
+
 	return true
 }
