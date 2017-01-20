@@ -48,3 +48,6 @@ func TestWeightedUGraph(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestWUndiShortestPath(t *testing.T) {
+}

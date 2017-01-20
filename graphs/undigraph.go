@@ -30,5 +30,10 @@ func (s *WeightedUGraph) AddEdge(src, dest string) *WeightedUGraph {
 
 	source.AddEdge(destination)
 	destination.AddEdge(source)
+
 	return s
+}
+
+func (s *WeightedUGraph) ShortestPath(src, dest string) []string {
+	return []string{}
 }
