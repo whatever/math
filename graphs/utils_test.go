@@ -77,3 +77,35 @@ func TestPick(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestUnpick(t *testing.T) {
+	m := map[string]float64{
+		"a": 10.0,
+		"b": 23.5,
+		"c": 87.3,
+		"d": 10.0,
+	}
+
+	if len(unpick(&m, "a")) != 3 {
+		t.Fail()
+	}
+
+	results := unpick(&m, "a", "b")
+
+	if results["c"] != 87.3 {
+		t.Fail()
+	}
+}
+
+func TestKeys(t *testing.T) {
+	m := map[string]float64{
+		"a": 10.0,
+		"b": 23.5,
+		"c": 87.3,
+		"d": 10.0,
+	}
+
+	if len(keys(&m)) != 4 {
+		t.Fail()
+	}
+}
