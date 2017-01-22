@@ -49,21 +49,24 @@ func TestWeightedUGraph(t *testing.T) {
 	}
 }
 
-func TestWUndiShortestPath(t *testing.T) {
+func TestWUndiShortestDistances(t *testing.T) {
 	a := NewWeightedUGraph()
 	a.AddVertex("a").AddVertex("b").AddVertex("c")
-	a.AddEdge("a", "b", 10)
-	a.AddEdge("a", "c", 3)
+	a.AddEdge("a", "b", 3)
+	a.AddEdge("b", "c", 3)
+	a.AddEdge("a", "c", 10)
 
-	expectations := map[*WeightedUGraph][]string{
-		&a: []string{"a", "b"},
+	d := a.ShortestDistances("a")
+
+	if d["a"] != 0 {
+		t.Fail()
 	}
 
-	for g, e := range expectations {
-		path := g.ShortestPath("a", "b")
-		if !StringsEqual(path, e) {
-			// fmt.Println(g, ":", path, "!=", e)
-			// t.Fail()
-		}
+	if d["b"] != 3 {
+		t.Fail()
+	}
+
+	if d["c"] != 6 {
+		t.Fail()
 	}
 }

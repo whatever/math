@@ -48,3 +48,15 @@ func keys(values *map[string]float64) []string {
 
 	return results
 }
+
+func keysBool(values *map[string]bool) []string {
+	results := make([]string, len(*values))
+	i := 0
+
+	for label, _ := range *values {
+		results[i] = label
+		i++
+	}
+
+	return results
+}
