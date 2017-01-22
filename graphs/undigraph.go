@@ -2,21 +2,7 @@ package math
 
 import (
 	"fmt"
-	"math"
 )
-
-func MinElement(values *map[string]float64) (string, float64) {
-	minVal := math.Inf(1)
-	minInd := ""
-
-	for label, val := range *values {
-		if val <= minVal {
-			minVal = val
-			minInd = label
-		}
-	}
-	return minInd, minVal
-}
 
 type WeightedUndiGraphEdge struct {
 	weight float64

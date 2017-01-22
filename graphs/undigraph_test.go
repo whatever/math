@@ -67,29 +67,3 @@ func TestWUndiShortestPath(t *testing.T) {
 		}
 	}
 }
-
-func TestMinElement(t *testing.T) {
-	a := map[string]float64{
-		"red":  23.0,
-		"blue": -200.0,
-		"y":    200.0,
-	}
-	label, result := MinElement(&a)
-	if label != "blue" || result != -200.0 {
-		t.Fail()
-	}
-}
-
-func StringsEqual(lhs, rhs []string) bool {
-	if len(lhs) != len(rhs) {
-		return false
-	}
-
-	for i, _ := range lhs {
-		if lhs[i] != rhs[i] {
-			return false
-		}
-	}
-
-	return true
-}
