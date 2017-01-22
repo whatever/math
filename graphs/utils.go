@@ -1,5 +1,22 @@
 package math
 
+import (
+	"math"
+)
+
+func MinElement(values *map[string]float64) (string, float64) {
+	minVal := math.Inf(1)
+	minInd := ""
+
+	for label, val := range *values {
+		if val <= minVal {
+			minVal = val
+			minInd = label
+		}
+	}
+	return minInd, minVal
+}
+
 func unpick(values *map[string]float64, keys ...string) map[string]float64 {
 	picked := make(map[string]float64)
 

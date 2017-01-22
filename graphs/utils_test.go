@@ -2,7 +2,6 @@ package math
 
 import (
 	"fmt"
-	"math"
 	"testing"
 )
 
@@ -34,19 +33,6 @@ func TestMinElement(t *testing.T) {
 	if label != "blue" || result != -200.0 {
 		t.Fail()
 	}
-}
-
-func MinElement(values *map[string]float64) (string, float64) {
-	minVal := math.Inf(1)
-	minInd := ""
-
-	for label, val := range *values {
-		if val <= minVal {
-			minVal = val
-			minInd = label
-		}
-	}
-	return minInd, minVal
 }
 
 func TestPick(t *testing.T) {
