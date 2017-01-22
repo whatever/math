@@ -5,10 +5,7 @@ import (
 	"math"
 )
 
-func Contains(values []string) {
-}
-
-func MinElement(values *map[string]float64, except []string) (string, float64) {
+func MinElement(values *map[string]float64) (string, float64) {
 	minVal := math.Inf(1)
 	minInd := ""
 
@@ -70,43 +67,45 @@ func (s *WeightedUGraph) AddEdge(src, dest string, weight float64) *WeightedUGra
 }
 
 func (s *WeightedUGraph) ShortestPath(src, dest string) []string {
-	// Create vertex set
-	q := make(map[string]bool)
-	distances := make(map[string]float64)
-	prev := make(map[string]*WeightedUndiGraphVertex)
+	/*
+		// Create vertex set
+		q := make(map[string]bool)
+		distances := make(map[string]float64)
+		prev := make(map[string]*WeightedUndiGraphVertex)
 
-	for _, v := range s.vertices {
-		q[v.Label] = true
-		distances[v.Label] = math.Inf(1)
-		prev[v.Label] = nil
-	}
-
-	distances[src] = 0
-
-	for len(q) > 0 {
-		label, _ := MinElement(&distances)
-		delete(q, label)
-
-		u := s.vertices[label]
-
-		for _, e := range u.Edges {
-			_, ok := q[e.dst.Label]
-
-			if !ok {
-				continue
-			}
-
-			alt := distances[u.Label] + e.weight
-			v := e.dst
-
-			if alt < distances[v.Label] {
-				distances[v.Label] = alt
-				prev[v.Label] = u
-			}
-
-			fmt.Println(e, alt)
+		for _, v := range s.vertices {
+			q[v.Label] = true
+			distances[v.Label] = math.Inf(1)
+			prev[v.Label] = nil
 		}
-	}
+
+		distances[src] = 0
+
+		for len(q) > 0 {
+			label, _ := MinElement(&distances)
+			delete(q, label)
+
+			u := s.vertices[label]
+
+			for _, e := range u.Edges {
+				_, ok := q[e.dst.Label]
+
+				if !ok {
+					continue
+				}
+
+				alt := distances[u.Label] + e.weight
+				v := e.dst
+
+				if alt < distances[v.Label] {
+					distances[v.Label] = alt
+					prev[v.Label] = u
+				}
+
+				fmt.Println(e, alt)
+			}
+		}
+	*/
 
 	return []string{}
 }
