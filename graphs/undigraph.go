@@ -53,6 +53,10 @@ func (s *WeightedUGraph) AddEdge(src, dest string, weight float64) *WeightedUGra
 	return s
 }
 
+/*
+Djikstra's Shortest Path Algorithm (Poorly) Implemented
+Return a map of distances
+*/
 func (s *WeightedUGraph) ShortestDistances(src string) map[string]float64 {
 	visited := make(map[string]bool)
 
