@@ -9,14 +9,14 @@ func _() {
 	fmt.Println("...")
 }
 
-func TestWeightedUndiGraphVertex(t *testing.T) {
-	a := WeightedUndiGraphVertex{"a", nil}
+func TestWeightedDiGraphVertex(t *testing.T) {
+	a := WeightedDiGraphVertex{"a", nil}
 
 	if a.Label != "a" {
 		t.Fail()
 	}
 
-	b := WeightedUndiGraphVertex{"b", nil}
+	b := WeightedDiGraphVertex{"b", nil}
 	b.AddEdge(&a, 10)
 
 	if len(b.Edges) != 1 || b.Edges[0].dst != &a {
@@ -43,13 +43,9 @@ func TestWeightedUGraph(t *testing.T) {
 	if len(a.vertices["a"].Edges) != 1 && a.vertices["a"].Edges[0].dst.Label != "b" {
 		t.Fail()
 	}
-
-	if len(a.vertices["b"].Edges) != 1 && a.vertices["b"].Edges[0].dst.Label != "a" {
-		t.Fail()
-	}
 }
 
-func TestWUndiShortestDistances(t *testing.T) {
+func TestWDiShortestDistances(t *testing.T) {
 	a := NewWeightedUGraph()
 	a.AddVertex("a").AddVertex("b").AddVertex("c")
 	a.AddEdge("a", "b", 3)

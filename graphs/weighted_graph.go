@@ -5,23 +5,23 @@ import (
 	"math"
 )
 
-type WeightedUndiGraphEdge struct {
+type WeightedDiGraphEdge struct {
 	weight float64
-	src    *WeightedUndiGraphVertex
-	dst    *WeightedUndiGraphVertex
+	src    *WeightedDiGraphVertex
+	dst    *WeightedDiGraphVertex
 }
 
-func (s *WeightedUndiGraphEdge) String() string {
+func (s *WeightedDiGraphEdge) String() string {
 	return fmt.Sprintf("[%s %s]: %0.1f", s.src.Label, s.dst.Label, s.weight)
 }
 
-type WeightedUndiGraphVertex struct {
+type WeightedDiGraphVertex struct {
 	Label string
-	Edges []*WeightedUndiGraphEdge
+	Edges []*WeightedDiGraphEdge
 }
 
-func (s *WeightedUndiGraphVertex) AddEdge(n *WeightedUndiGraphVertex, weight float64) {
-	e := WeightedUndiGraphEdge{weight, s, n}
+func (s *WeightedDiGraphVertex) AddEdge(n *WeightedDiGraphVertex, weight float64) {
+	e := WeightedDiGraphEdge{weight, s, n}
 	s.Edges = append(s.Edges, &e)
 }
 
@@ -30,15 +30,15 @@ func (s *WeightedUndiGraphVertex) AddEdge(n *WeightedUndiGraphVertex, weight flo
 */
 
 type WeightedUGraph struct {
-	vertices map[string]*WeightedUndiGraphVertex
+	vertices map[string]*WeightedDiGraphVertex
 }
 
 func NewWeightedUGraph() WeightedUGraph {
-	return WeightedUGraph{make(map[string]*WeightedUndiGraphVertex)}
+	return WeightedUGraph{make(map[string]*WeightedDiGraphVertex)}
 }
 
 func (s *WeightedUGraph) AddVertex(label string) *WeightedUGraph {
-	n := WeightedUndiGraphVertex{label, nil}
+	n := WeightedDiGraphVertex{label, nil}
 	s.vertices[label] = &n
 	return s
 }
@@ -48,7 +48,7 @@ func (s *WeightedUGraph) AddEdge(src, dest string, weight float64) *WeightedUGra
 	destination := s.vertices[dest]
 
 	source.AddEdge(destination, weight)
-	destination.AddEdge(source, weight)
+	// destination.AddEdge(source, weight)
 
 	return s
 }
@@ -63,7 +63,7 @@ func (s *WeightedUGraph) ShortestDistances(src string) map[string]float64 {
 	// Create vertex set
 	q := make(map[string]bool)
 	distances := make(map[string]float64)
-	prev := make(map[string]*WeightedUndiGraphVertex)
+	prev := make(map[string]*WeightedDiGraphVertex)
 
 	for _, v := range s.vertices {
 		q[v.Label] = true
